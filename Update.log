@@ -1,0 +1,107 @@
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018438782720/?components=100 HTTP/1.1" 200 421
+DEBUG:root:SpacePirateKubli
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009261248712/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2310
+DEBUG:root:Activity = 2022-06-16T04:06:56, 10977242199
+DEBUG:root:Break 2022-06-16 04:06:56 2022-06-22 04:47:30
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009261250067/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2122
+DEBUG:root:Activity = 2022-06-22T21:25:38, 11021844288
+DEBUG:root:If 2022-06-22 21:25:38
+DEBUG:root:Activity = 2022-06-22T21:22:05, 11021811847
+DEBUG:root:If 2022-06-22 21:22:05
+DEBUG:root:Activity = 2022-06-22T21:08:07, 11021764512
+DEBUG:root:If 2022-06-22 21:08:07
+DEBUG:root:Activity = 2022-06-22T20:55:04, 11021693353
+DEBUG:root:If 2022-06-22 20:55:04
+DEBUG:root:Activity = 2022-06-22T20:45:30, 11021625266
+DEBUG:root:If 2022-06-22 20:45:30
+DEBUG:root:Activity = 2022-06-20T22:14:32, 11007633554
+DEBUG:root:Break 2022-06-20 22:14:32 2022-06-22 04:47:30
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009394375191/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2300
+DEBUG:root:Activity = 2022-05-17T05:19:11, 10752515115
+DEBUG:root:Break 2022-05-17 05:19:11 2022-06-22 04:47:30
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021844288 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021844288/ HTTP/1.1" 200 4680
+DEBUG:root:2022-06-22T21:25:38
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021811847 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021811847/ HTTP/1.1" 200 3735
+DEBUG:root:Exception raised MatchStats - displayName in instance 11021811847
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021764512 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021764512/ HTTP/1.1" 200 4863
+DEBUG:root:2022-06-22T21:08:07
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021693353 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021693353/ HTTP/1.1" 200 5175
+DEBUG:root:2022-06-22T20:55:04
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021625266 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11021625266/ HTTP/1.1" 200 4907
+DEBUG:root:2022-06-22T20:45:30
+DEBUG:root:SpacePirateKubli's Data Entered
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018441958178/?components=100 HTTP/1.1" 200 403
+DEBUG:root:DeathAngelx101
+DEBUG:root:DeathAngelx101 No new games since 2022-06-22T05:25:46 2022-06-22T05:25:46
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018435743932/?components=100 HTTP/1.1" 200 410
+DEBUG:root:blacksun23
+DEBUG:root:blacksun23 No new games since 2022-06-22T01:59:23 2022-06-22T01:59:23
+DEBUG:root:Update Done
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018438782720/?components=100 HTTP/1.1" 200 421
+DEBUG:root:SpacePirateKubli
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009261248712/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2310
+DEBUG:root:Activity = 2022-06-16T04:06:56, 10977242199
+DEBUG:root:Break 2022-06-16 04:06:56 2022-06-22 21:34:19
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009261250067/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2220
+DEBUG:root:Activity = 2022-06-22T23:17:23, 11022434331
+DEBUG:root:If 2022-06-22 23:17:23
+DEBUG:root:Activity = 2022-06-22T21:25:38, 11021844288
+DEBUG:root:Break 2022-06-22 21:25:38 2022-06-22 21:34:19
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018438782720/Character/2305843009394375191/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2300
+DEBUG:root:Activity = 2022-05-17T05:19:11, 10752515115
+DEBUG:root:Break 2022-05-17 05:19:11 2022-06-22 21:34:19
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): stats.bungie.net:443
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11022434331 HTTP/1.1" 307 None
+DEBUG:urllib3.connectionpool:https://stats.bungie.net:443 "GET /Platform/Destiny2/Stats/PostGameCarnageReport/11022434331/ HTTP/1.1" 200 4765
+DEBUG:root:2022-06-22T23:17:23
+DEBUG:root:SpacePirateKubli's Data Entered
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018441958178/?components=100 HTTP/1.1" 200 403
+DEBUG:root:DeathAngelx101
+DEBUG:root:DeathAngelx101 No new games since 2022-06-22T05:25:46 2022-06-22T05:25:46
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Profile/4611686018435743932/?components=100 HTTP/1.1" 200 408
+DEBUG:root:blacksun23
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018435743932/Character/2305843009276750543/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2305
+DEBUG:root:Activity = 2022-06-22T01:49:25, 11016533964
+DEBUG:root:Break 2022-06-22 01:49:25 2022-06-22 01:59:23
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018435743932/Character/2305843009276750544/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2331
+DEBUG:root:Activity = 2022-06-22T00:05:31, 11015778806
+DEBUG:root:Break 2022-06-22 00:05:31 2022-06-22 01:59:23
+DEBUG:root:Activity Page 0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.bungie.net:443
+DEBUG:urllib3.connectionpool:https://www.bungie.net:443 "GET /Platform/Destiny2/2/Account/4611686018435743932/Character/2305843009276750545/Stats/Activities/?mode=5&page=0&count=10 HTTP/1.1" 200 2303
+DEBUG:root:Activity = 2022-06-15T17:52:09, 10973782733
+DEBUG:root:Break 2022-06-15 17:52:09 2022-06-22 01:59:23
+DEBUG:root:Activity Page 0
+DEBUG:root:blacksun23's Data Entered
+DEBUG:root:Update Done
