@@ -1,0 +1,6 @@
+name: SniperSkirmish
+services:
+- name: web
+  github:
+    repo: SniperSkirmish/DestinyStats
+    branch: main
