@@ -23,7 +23,7 @@ def get_manifest():
     with zipfile.ZipFile('MANZIP') as zip:
         name = zip.namelist()
         zip.extractall()
-    os.rename(name[0], 'Manifest.content')
+    os.rename(name[0], 'manifest.content')
     print('Unzipped!')
     logging.debug("Manifest Unzipped")
 
