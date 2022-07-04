@@ -54,13 +54,21 @@ li a:hover:not(.active) {
   height: 180px; /* Should be removed. Only for demonstration */
 }
 
-/* Create four equal columns that floats next to each other */
-.player {
-  float: left;
+/* Create flex container for player cards */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  background-color: white;
+  align-items: stretch;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  width: 200px;
+  margin: 10px;
   text-align: center;
-  width: 25%;
-  padding: 10px;
-  /*height: 180px; /* Should be removed. Only for demonstration */
+  line-height: 15px;
 }
 
 /* Clear floats after the columns */
@@ -125,9 +133,9 @@ li a:hover:not(.active) {
 
 </div>
 
-<div class="row">
+<div class="flex-container">
   {% for player in playerStats %}
-    <div class="player" style="background-color:#bbc;">
+    <div style="background-color:#bbc;">
       <h4>{{player['Name']}}</h4>
       <p>{{player['SniperKills']}} Sniper Kills</p>
       <p>{{player['SniperHeadShots']}} Sniper Headshots</p>
