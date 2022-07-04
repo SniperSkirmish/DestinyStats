@@ -84,8 +84,13 @@ def build_dict(hash_dict):
     #for every table name in the dictionary
     for table_name in hash_dict.keys():
         #get a list of all the jsons from the table
-        cur.execute('SELECT json from '+table_name)
-        print('Generating '+table_name+' dictionary....')
+        if table_name == 'DestinyInventoryItemDefinition':
+            cur.execute('SELECT json from DestinyInventoryItemDefinition WHERE json like \'%"itemType":3%\'')
+            print('Generating '+table_name+' dictionary....')
+
+        else:
+            cur.execute('SELECT json from '+table_name)
+            print('Generating '+table_name+' dictionary....')
 
         #this returns a list of tuples: the first item in each tuple is our json
         items = cur.fetchall()
@@ -118,8 +123,6 @@ def makepickle():
     else:
         print('Pickle Exists')
 
-    with open('manifest.pickle', 'rb') as data:
-        all_data = pickle.load(data)
 
 # hash = 1363886209
 # ghorn = all_data['DestinyInventoryItemDefinition'][hash]
