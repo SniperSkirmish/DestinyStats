@@ -80,6 +80,7 @@ def updateStats():
     activityUrls = []
     # charActivities = []
     guardians = []
+    weaponCategory = 'Pulse Rifle'
     weaponStats = []
 
     with open('manifest.pickle', 'rb') as data:
@@ -117,7 +118,7 @@ def updateStats():
             continue
 
         print(str(godSlayer.name) + " Last Login " + str(lastLogin) + " Last Recorded " + str(godSlayer.lastPlayed))
-        logger.info(str(godSlayer.name) + " Last Login " + str(lastLogin) + " Last Recorded " + str(godSlayer.lastPlayed))
+        logger.debug(str(godSlayer.name) + " Last Login " + str(lastLogin) + " Last Recorded " + str(godSlayer.lastPlayed))
     
         for i in range(3):
 
@@ -167,35 +168,35 @@ def updateStats():
                             latestActivity = activityDate
 
                         print("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
-                        logger.info("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
+                        logger.debug("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
                     
                     else:
                         print("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
-                        logger.info("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
+                        logger.debug("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
 
                     if activityDate > startDate:
                         if j.bValues.kills.basic.value > 0:
                             activityList.append(activityClass(activityPeriod,activityInstance))
                             activityCnt = activityCnt + 1
                             print("If " + str(activityDate))
-                            logger.info("If " + str(activityDate))
+                            logger.debug("If " + str(activityDate))
                         else:
                             print("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
-                            logger.info("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
+                            logger.debug("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
                     else:
                         print("Break " + str(activityDate) + " " + str(startDate))
-                        logger.info("Break " + str(activityDate) + " " + str(startDate))
+                        logger.debug("Break " + str(activityDate) + " " + str(startDate))
                         break
                 
                 print("Activity Page " + str(activityPage))
-                logger.info("Activity Page " + str(activityPage))
+                logger.debug("Activity Page " + str(activityPage))
                 activityPage = activityPage + 1
 
 
             #print(activityResponse.json())
             # charActivities.append(activityCnt)
             print("Latest Activity = " + str(latestActivity))
-            logging.info("Latest Activity = " + str(latestActivity))
+            logging.debug("Latest Activity = " + str(latestActivity))
 
         for k in activityList:
 
@@ -222,7 +223,7 @@ def updateStats():
                 weapons = latestScore.extended.weapons
             except Exception as e:
                 print("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
-                logger.info("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
+                logger.critical("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
                 continue
 
             stats = latestScore.bValues
@@ -232,7 +233,7 @@ def updateStats():
             
             except Exception as e:
                 print("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
-                logger.info("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
+                logger.critical("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
                 continue
 
             for m in weapons:
@@ -246,7 +247,7 @@ def updateStats():
             activityData.append([matchStats, weaponStats.copy()])
             weaponStats.clear()
             print(k.period)
-            logger.info(k.period)
+            logger.debug(k.period)
 
         for index, entry in enumerate(activityData):
             for slot, weapon in enumerate(entry[1]):
@@ -257,10 +258,10 @@ def updateStats():
                     activityData[index][1][slot].subType = weaponData['itemSubType']
 
                     cursor.execute("INSERT INTO {} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)".format(godSlayer.name + 'GameData'), (entry[0].name, entry[0].membershipId, entry[0].characterId, entry[0].period, entry[0].instance, entry[0].score, entry[0].kills, entry[0].deaths, weapon.referenceId, weapon.weaponKills, weapon.precisionKills, weapon.name, weapon.typeName, weapon.subType))
-                    logger.info(str(weapon.name) + " inserted for instance " + str(entry[0].instance))
+                    logger.debug(str(weapon.name) + " inserted for instance " + str(entry[0].instance))
 
                 except:
-                    logger.info("Failed to get weapon info from weapon id " + str(weapon.referenceId) + " in match " + entry[0].instance)
+                    logger.critical("Failed to get weapon info from weapon id " + str(weapon.referenceId) + " in match " + entry[0].instance)
 
                 # print(entry[0].name + " " + str(entry[0].membershipId) + " " 
                 #     + str(entry[0].characterId) + " " + entry[0].period + " " 
@@ -270,15 +271,17 @@ def updateStats():
                 #     + str(weapon.precisionKills)  + " " + weapon.name + " "
                 #     + weapon.typeName + " " + str(weapon.subType))
 
-        kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(godSlayer.name + 'GameData')).fetchone()[0]
-        headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(godSlayer.name + 'GameData')).fetchone()[0]
+        kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
+        headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
         
         if headshots == None:
+                kills = 0
+                headshots = 0
                 headshotPercentage = 0
         else:
                 headshotPercentage = round((headshots / kills * 100), 1)
 
-        games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(godSlayer.name + 'GameData')).fetchone()[0]
+        games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
 
         cursor.execute("UPDATE Leaderboard SET LastLogin = ?, LastActivity = ?, SniperKills = ?, SniperHeadShots = ?, HeadshotPercentage = ?, MatchesPlayed = ? WHERE MembershipId = ?", (lastLogin, latestActivity, kills, headshots, headshotPercentage, games, godSlayer.membershipId))
 
@@ -293,4 +296,4 @@ def updateStats():
     connection.close()
 
     print("Update Done")
-    logger.info("Update Done")
+    logger.debug("Update Done")

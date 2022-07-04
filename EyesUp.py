@@ -12,18 +12,17 @@ import pickle
 import requests
 import sqlite3
 
-# logging.basicConfig(filename='EyesUp.log', encoding='utf-8', level=logging.info)
-log_format = '%(name)s - %(levelname)s - %(message)s'
+# Log Setup
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 # Use FileHandler() to log to a file
-file_handler = logging.FileHandler("eyesup.log")
-formatter = logging.Formatter(log_format)
-file_handler.setFormatter(formatter)
+fh = logging.FileHandler("eyesup.log", mode='w', encoding=None, delay=False)
+formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
 
 # Don't forget to add the file handler
-logger.addHandler(file_handler)
+logger.addHandler(fh)
 
 
 class guardian:
@@ -77,6 +76,7 @@ def initializeGuardian(name, startDate):
     charActivities = []
     latestActivity = startDate
     # startDate = datetime.fromisoformat('2022-06-19T00:00:00')
+    weaponCategory = 'Pulse Rifle'
     weaponStats = []
 
     # name = "SpacePirateKubli"
@@ -91,7 +91,16 @@ def initializeGuardian(name, startDate):
     cursor = connection.cursor()
 
     cursor.execute('CREATE TABLE IF NOT EXISTS Leaderboard (Name TEXT, MembershipId TEXT, MembershipType INT, Character1Id TEXT, Character2Id TEXT, Character3Id TEXT, LastLogin TEXT, LastActivity TEXT, SniperKills INT, SniperHeadShots INT, HeadshotPercentage REAL, MatchesPlayed INT)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS StartDate (Start TEXT, UNIQUE(Start))')
 
+    print(startDate)
+    try:
+        cursor.execute('INSERT into StartDate VALUES (?)', (startDate.isoformat(),))
+        print('Startdate inserted ' + startDate.isoformat())
+    except Exception as e:
+         logging.info('Startdate already exists')
+         print('Startdate already exists')
+         print(e)
     # activityInfo = activityData('null','null')
 
     # print(activityInfo.period)
@@ -310,15 +319,17 @@ def initializeGuardian(name, startDate):
             #     + str(weapon.precisionKills)  + " " + weapon.name + " "
             #     + weapon.typeName + " " + str(weapon.subType))
 
-    kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(user.globalDisplayName + 'GameData')).fetchone()[0]
-    headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(user.globalDisplayName + 'GameData')).fetchone()[0]
+    kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
+    headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
     
     if kills == None:
+        kills = 0
+        headshots = 0
         headshotPercentage = 0
     else:
         headshotPercentage = round((headshots / kills * 100), 1)
 
-    games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName='Pulse Rifle'".format(user.globalDisplayName + 'GameData')).fetchone()[0]
+    games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
 
     cursor.execute('INSERT INTO Leaderboard VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (user.globalDisplayName, user.membershipId, user.membershipType, user.characterIds[0], user.characterIds[1], user.characterIds[2], user.dateLastPlayed, latestActivity, kills, headshots, headshotPercentage, games))
 

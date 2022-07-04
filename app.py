@@ -7,8 +7,6 @@ import logging
 import sqlite3
 import sys
 
-# import EyesUp
-# import GetManifest
 import UpdateData
 
 # logging.basicConfig(filename='app.log', encoding='utf-8', level=logging.info)
@@ -29,17 +27,6 @@ logger.addHandler(file_handler)
 
 print("Start Init")
 logging.info("Start Init")
-
-# GetManifest.makepickle()
-
-# print("Manifest Gotten")
-# logging.info("Manifest Gotten")
-
-# for guardian in guardians:
-#     gameData = EyesUp.initializeGuardian(guardian, startDate)
-
-# print("Guardian Info Gotten")
-# logging.info("Guardian Info Gotten")
 
 app = Flask(__name__)
 
@@ -62,19 +49,28 @@ def get_db():
 
 @scheduler.task('interval', id='do_job_1', seconds=30, misfire_grace_time=900)
 def job1():
-    UpdateData.updateStats()
+    try:
+        UpdateData.updateStats()
+    except Exception as e:
+            print("Exception raised UpdateStats - " + str(e))
+            logging.warning("Exception raised UpdateStats - " + str(e))
+
     print("Data Updated")
     logging.info("Data Updated")
 
 @app.route("/")
 def index():
-    """Show all the posts, most recent first."""
-    db = get_db()
-    mostSnipes = db.execute("SELECT Name, max(SniperKills) FROM Leaderboard").fetchall()
-    mostHeadshots = db.execute("SELECT Name, max(SniperHeadShots) FROM Leaderboard").fetchall()
-    highestHsPercent = db.execute("SELECT Name, max(HeadshotPercentage) FROM Leaderboard").fetchall()
-    playerStats = db.execute("SELECT Name, SniperKills, SniperHeadShots, HeadshotPercentage FROM Leaderboard").fetchall()
-    return render_template("index.html", mostSnipes=mostSnipes, mostHeadshots=mostHeadshots, highestHsPercent=highestHsPercent, playerStats=playerStats)
+    try:
+        db = get_db()
+        mostSnipes = db.execute("SELECT Name, max(SniperKills) FROM Leaderboard").fetchall()
+        mostHeadshots = db.execute("SELECT Name, max(SniperHeadShots) FROM Leaderboard").fetchall()
+        highestHsPercent = db.execute("SELECT Name, max(HeadshotPercentage) FROM Leaderboard").fetchall()
+        playerStats = db.execute("SELECT Name, SniperKills, SniperHeadShots, HeadshotPercentage FROM Leaderboard").fetchall()
+        return render_template("index.html", mostSnipes=mostSnipes, mostHeadshots=mostHeadshots, highestHsPercent=highestHsPercent, playerStats=playerStats)
+
+    except Exception as e:
+            print("Exception raised app route index - " + str(e))
+            logging.warning("Exception raised app route index - " + str(e))
 
 @app.route("/about")
 def about():
