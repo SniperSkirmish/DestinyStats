@@ -83,7 +83,7 @@ activityUrls = []
 charActivities = []
 latestActivity = startDate
 # startDate = datetime.fromisoformat('2022-06-19T00:00:00')
-weaponCategory = 'Pulse Rifle'
+weaponCategory = 'Sniper Rifle'
 weaponStats = []
 
 # name = "SpacePirateKubli"

@@ -80,7 +80,7 @@ def updateStats():
     activityUrls = []
     # charActivities = []
     guardians = []
-    weaponCategory = 'Pulse Rifle'
+    weaponCategory = 'Sniper Rifle'
     weaponStats = []
 
     with open('manifest.pickle', 'rb') as data:
