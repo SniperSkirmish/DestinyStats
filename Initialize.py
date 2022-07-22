@@ -23,7 +23,7 @@ formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
 
 guardians = ('SpacePirateKubli', 'DeathAngelx101', 'blacksun23')
-startDate = datetime.fromisoformat('2022-05-24T00:00:00')
+startDate = datetime.fromisoformat('2022-07-04T00:00:00')
 # startDate = '2022-06-22T00:00:00'
 
 GetManifest.makepickle()
