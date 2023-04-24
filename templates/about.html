@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='SniperLogo.ico') }}">
+    <title>Sniper Skirmish</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+</head>
+<body>
+  <div class="ml-auto mb-6">
+      <div class="sticky top-0 z-10 h-auto border-b bg-white lg:py-2.5">
+      <div class="flex items-center justify-between space-x-4 md:px-6 px-4 py-2 2xl:container bg-white">
+        <h5 class="text-2xl font-medium text-bigStone lg:block">Sniper Skirmish</h5>
+        <div class="block w-auto" id="navbar-default">
+          <ul class="flex rounded-lg mr-0 border-gray-100 bg-white p-2 mt-0 md:flex-row md:space-x-8 border-0 md:bg-big md:text-sm md:font-medium">
+            <li>
+              <a href="/" class="block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 text-hippyBlue hover:text-gray-400" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a href="about" class="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-congressBlue">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="px-6 pt-6 mx-auto container bg-white">
+      <h5 class="block text-3xl font-meidum pb-6 text-bigStone">
+        Frequently Asked Questions
+      </h5>
+      <hr class="border-gray-300">
+      <div class="block pt-4 font-medium text-congressBlue">
+        What's the point of this, isn't Josh obviously the better sniper?
+      </div>
+      <div class="block pt-1 pb-4 font-light text-gray-600">
+        Probably, but now we can quantify it numerically
+      </div>
+      <hr class="border-gray-300">
+      <div class="block pt-4 font-medium text-congressBlue">
+        Doesn't this seem a little excessive?
+      </div>
+      <div class="block pt-1 pb-4 font-light text-gray-600">
+        Absolutely, but I needed a URL to get the API key from Bungie
+      </div>
+      <hr class="border-gray-300">
+      <div class="block pt-4 font-medium text-congressBlue">
+        When did you have time to do this, shouldn't you be working?
+      </div>
+      <div class="block pt-1 pb-4 font-light text-gray-600">
+        Probably, but now we can quantify it numerically
+      </div>
+    </div>
+  </div>
+</body>
+</html>
