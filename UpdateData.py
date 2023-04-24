@@ -10,13 +10,15 @@ import pickle
 import requests
 import sqlite3
 
-log_format = '%(name)s - %(levelname)s - %(message)s'
+# Log Setup
+log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+dateFormat='%Y-%m-%d,%H:%M:%S'
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 # Use FileHandler() to log to a file
-file_handler = logging.FileHandler("updater.log")
-formatter = logging.Formatter(log_format)
+file_handler = logging.FileHandler("updater.log", mode='a')
+formatter = logging.Formatter(log_format, dateFormat)
 file_handler.setFormatter(formatter)
 
 # Don't forget to add the file handler
@@ -196,7 +198,7 @@ def updateStats():
             #print(activityResponse.json())
             # charActivities.append(activityCnt)
             print("Latest Activity = " + str(latestActivity))
-            logging.debug("Latest Activity = " + str(latestActivity))
+            logger.debug("Latest Activity = " + str(latestActivity))
 
         for k in activityList:
 
@@ -257,7 +259,7 @@ def updateStats():
                     activityData[index][1][slot].typeName = weaponData['itemTypeDisplayName']
                     activityData[index][1][slot].subType = weaponData['itemSubType']
 
-                    cursor.execute("INSERT INTO {} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)".format(godSlayer.name + 'GameData'), (entry[0].name, entry[0].membershipId, entry[0].characterId, entry[0].period, entry[0].instance, entry[0].score, entry[0].kills, entry[0].deaths, weapon.referenceId, weapon.weaponKills, weapon.precisionKills, weapon.name, weapon.typeName, weapon.subType))
+                    cursor.execute('INSERT INTO "{}" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'.format(godSlayer.name + ' GameData'), (entry[0].name, entry[0].membershipId, entry[0].characterId, entry[0].period, entry[0].instance, entry[0].score, entry[0].kills, entry[0].deaths, weapon.referenceId, weapon.weaponKills, weapon.precisionKills, weapon.name, weapon.typeName, weapon.subType))
                     logger.debug(str(weapon.name) + " inserted for instance " + str(entry[0].instance))
 
                 except:
@@ -271,8 +273,8 @@ def updateStats():
                 #     + str(weapon.precisionKills)  + " " + weapon.name + " "
                 #     + weapon.typeName + " " + str(weapon.subType))
 
-        kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
-        headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
+        kills = cursor.execute('SELECT SUM(WeaponKills) FROM "{}" WHERE WeaponTypeName=?'.format(godSlayer.name + ' GameData'), (weaponCategory,)).fetchone()[0]
+        headshots = cursor.execute('SELECT SUM(PrecisionKills) FROM "{}" WHERE WeaponTypeName=?'.format(godSlayer.name + ' GameData'), (weaponCategory,)).fetchone()[0]
         
         if headshots == None:
                 kills = 0
@@ -281,7 +283,7 @@ def updateStats():
         else:
                 headshotPercentage = round((headshots / kills * 100), 1)
 
-        games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName=?".format(godSlayer.name + 'GameData'), (weaponCategory,)).fetchone()[0]
+        games =  cursor.execute('SELECT COUNT(DISTINCT Instance) FROM "{}" WHERE WeaponTypeName=?'.format(godSlayer.name + ' GameData'), (weaponCategory,)).fetchone()[0]
 
         cursor.execute("UPDATE Leaderboard SET LastLogin = ?, LastActivity = ?, SniperKills = ?, SniperHeadShots = ?, HeadshotPercentage = ?, MatchesPlayed = ? WHERE MembershipId = ?", (lastLogin, latestActivity, kills, headshots, headshotPercentage, games, godSlayer.membershipId))
 

@@ -13,16 +13,18 @@ import requests
 import sqlite3
 
 # Log Setup
+log_format = '%(name)s - %(levelname)s - %(message)s'
+dateFormat='%Y-%m-%d,%H:%M:%S'
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 # Use FileHandler() to log to a file
-fh = logging.FileHandler("eyesup.log", mode='w', encoding=None, delay=False)
-formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-fh.setFormatter(formatter)
+file_handler = logging.FileHandler("eyesup.log", mode='w', encoding=None, delay=False)
+formatter = logging.Formatter(log_format, dateFormat)
+file_handler.setFormatter(formatter)
 
 # Don't forget to add the file handler
-logger.addHandler(fh)
+logger.addHandler(file_handler)
 
 
 class guardian:
@@ -82,7 +84,7 @@ def initializeGuardian(name, startDate):
     # name = "SpacePirateKubli"
 
     print("Initialize Guardian " + name + " Starting at Date " + str(startDate))
-    logging.info("Initialize Guardian " + name + " Starting at Date " + str(startDate))
+    logger.info("Initialize Guardian " + name + " Starting at Date " + str(startDate))
 
     with open('manifest.pickle', 'rb') as data:
         destiny_data = pickle.load(data)
@@ -98,7 +100,7 @@ def initializeGuardian(name, startDate):
         cursor.execute('INSERT into StartDate VALUES (?)', (startDate.isoformat(),))
         print('Startdate inserted ' + startDate.isoformat())
     except Exception as e:
-         logging.info('Startdate already exists')
+         logger.info('Startdate already exists')
          print('Startdate already exists')
          print(e)
     # activityInfo = activityData('null','null')
@@ -140,7 +142,7 @@ def initializeGuardian(name, startDate):
     user.membershipId = nameSearch.Response.searchResults[0].destinyMemberships[0].membershipId
     user.membershipType = nameSearch.Response.searchResults[0].destinyMemberships[0].membershipType
 
-    cursor.execute("CREATE TABLE IF NOT EXISTS {} (Name TEXT, MembershipId INT, CharacterId INT, Period TEXT, Instance INT, Score INT, Kills INT, Deaths INT, WeaponRefId INT, WeaponKills INT, PrecisionKills INT, WeaponName TEXT, WeaponTypeName TEXT, WeaponItemSubtype INT)".format(user.globalDisplayName + 'GameData'))
+    cursor.execute('CREATE TABLE IF NOT EXISTS "{}" (Name TEXT, MembershipId INT, CharacterId INT, Period TEXT, Instance INT, Score INT, Kills INT, Deaths INT, WeaponRefId INT, WeaponKills INT, PrecisionKills INT, WeaponName TEXT, WeaponTypeName TEXT, WeaponItemSubtype INT)'.format(user.globalDisplayName + ' GameData'))
 
     #print(a)
     #print(b)
@@ -219,35 +221,35 @@ def initializeGuardian(name, startDate):
                         latestActivity = activityDate
                         
                     print("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
-                    logging.info("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
+                    logger.info("Activity = " + str(activityPeriod) + ", " + str(activityInstance))
                 
                 else:
                     print("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
-                    logging.info("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
+                    logger.info("Kills = " + str(j.bValues.kills.basic.value) + ", Period = " + str(j.period) + ", Instance = " + str(j.activityDetails.instanceId))
 
                 if activityDate > startDate:
                     if j.bValues.kills.basic.value > 0:
                         activityList.append(activityClass(activityPeriod,activityInstance))
                         activityCnt = activityCnt + 1
                         print("If " + str(activityDate))
-                        logging.info("If " + str(activityDate))
+                        logger.info("If " + str(activityDate))
                     else:
                         print("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
-                        logging.info("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
+                        logger.info("If DNF" + str(datetime.fromisoformat(j.period[:-1])))
                 else:
                     print("Break " + str(activityDate) + " " + str(startDate))
-                    logging.info("Break " + str(activityDate) + " " + str(startDate))
+                    logger.info("Break " + str(activityDate) + " " + str(startDate))
                     break
             
             print("Activity Page " + str(activityPage))
-            logging.info("Activity Page " + str(activityPage))
+            logger.info("Activity Page " + str(activityPage))
             activityPage = activityPage + 1
 
 
         #print(activityResponse.json())
         charActivities.append(activityCnt)
         print("Latest Activity = " + str(latestActivity))
-        logging.info("Latest Activity = " + str(latestActivity))
+        logger.info("Latest Activity = " + str(latestActivity))
 
     for k in activityList:
 
@@ -274,7 +276,7 @@ def initializeGuardian(name, startDate):
             weapons = latestScore.extended.weapons
         except Exception as e:
             print("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
-            logging.info("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
+            logger.info("Exception raised Weapons - " + str(e) + " in instance " + str(k.instanceId))
             continue
 
         stats = latestScore.bValues
@@ -284,7 +286,7 @@ def initializeGuardian(name, startDate):
         
         except Exception as e:
                 print("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
-                logging.info("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
+                logger.info("Exception raised MatchStats - " + str(e) + " in instance " + str(k.instanceId))
                 continue
 
         for m in weapons:
@@ -296,7 +298,7 @@ def initializeGuardian(name, startDate):
         activityData.append([matchStats, weaponStats.copy()])
         weaponStats.clear()
         print(k.period)
-        logging.info(k.period)
+        logger.info(k.period)
 
     for index, entry in enumerate(activityData):
         for slot, weapon in enumerate(entry[1]):
@@ -306,10 +308,10 @@ def initializeGuardian(name, startDate):
                 activityData[index][1][slot].typeName = weaponData['itemTypeDisplayName']
                 activityData[index][1][slot].subType = weaponData['itemSubType']
 
-                cursor.execute("INSERT INTO {} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)".format(user.globalDisplayName + 'GameData'), (entry[0].name, entry[0].membershipId, entry[0].characterId, entry[0].period, entry[0].instance, entry[0].score, entry[0].kills, entry[0].deaths, weapon.referenceId, weapon.weaponKills, weapon.precisionKills, weapon.name, weapon.typeName, weapon.subType))
+                cursor.execute('INSERT INTO "{}" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'.format(user.globalDisplayName + ' GameData'), (entry[0].name, entry[0].membershipId, entry[0].characterId, entry[0].period, entry[0].instance, entry[0].score, entry[0].kills, entry[0].deaths, weapon.referenceId, weapon.weaponKills, weapon.precisionKills, weapon.name, weapon.typeName, weapon.subType))
 
             except:
-                logging.info("Failed to get weapon info from weapon id " + str(weapon.referenceId) + " in match " + entry[0].instance)
+                logger.info("Failed to get weapon info from weapon id " + str(weapon.referenceId) + " in match " + entry[0].instance)
 
             # print(entry[0].name + " " + str(entry[0].membershipId) + " " 
             #     + str(entry[0].characterId) + " " + entry[0].period + " " 
@@ -319,8 +321,8 @@ def initializeGuardian(name, startDate):
             #     + str(weapon.precisionKills)  + " " + weapon.name + " "
             #     + weapon.typeName + " " + str(weapon.subType))
 
-    kills = cursor.execute("SELECT SUM(WeaponKills) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
-    headshots = cursor.execute("SELECT SUM(PrecisionKills) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
+    kills = cursor.execute('SELECT SUM(WeaponKills) FROM "{}" WHERE WeaponTypeName=?'.format(user.globalDisplayName + ' GameData'), (weaponCategory,)).fetchone()[0]
+    headshots = cursor.execute('SELECT SUM(PrecisionKills) FROM "{}" WHERE WeaponTypeName=?'.format(user.globalDisplayName + ' GameData'), (weaponCategory,)).fetchone()[0]
     
     if kills == None:
         kills = 0
@@ -329,7 +331,7 @@ def initializeGuardian(name, startDate):
     else:
         headshotPercentage = round((headshots / kills * 100), 1)
 
-    games =  cursor.execute("SELECT COUNT(DISTINCT Instance) FROM {} WHERE WeaponTypeName=?".format(user.globalDisplayName + 'GameData'), (weaponCategory,)).fetchone()[0]
+    games =  cursor.execute('SELECT COUNT(DISTINCT Instance) FROM "{}" WHERE WeaponTypeName=?'.format(user.globalDisplayName + ' GameData'), (weaponCategory,)).fetchone()[0]
 
     cursor.execute('INSERT INTO Leaderboard VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (user.globalDisplayName, user.membershipId, user.membershipType, user.characterIds[0], user.characterIds[1], user.characterIds[2], user.dateLastPlayed, latestActivity, kills, headshots, headshotPercentage, games))
 
@@ -338,6 +340,6 @@ def initializeGuardian(name, startDate):
     connection.close()
 
     print("Done")
-    logging.info("Done")
+    logger.info("Done")
 
     return
