@@ -14,7 +14,7 @@ import sqlite3
 log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 dateFormat='%Y-%m-%d,%H:%M:%S'
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # Use FileHandler() to log to a file
 file_handler = logging.FileHandler("updater.log", mode='a')
